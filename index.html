@@ -156,6 +156,105 @@
         .decoration-2 { top: 250px; right: 40px; }
         .decoration-3 { bottom: 100px; left: 50px; }
         .decoration-4 { bottom: 100px; right: 30px; }
+		.music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-control:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-button {
+            background: linear-gradient(135deg, #E8151B 0%, #4F0A0F 100%);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .control-button:hover {
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 24px;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-label {
+            color: #E8151B 0%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .volume-slider {
+            width: 120px;
+            height: 6px;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #E8151B 0%, #4F0A0F 100%);
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #0EAD41;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            border-width: 4px;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #0EAD41;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .volume-slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            border-width: 4px;
+        }
+
+        .volume-value {
+            color: #0EAD41;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 40px;
+        }
     </style>
 </head>
 <body>
@@ -188,14 +287,28 @@
         </div>
         
         <div class="subtitle">
-            Collège Lycée Saint-Elme<br>
-            Arcachon
+            La dernière semaine avant les vacances
         </div>
         
         <div class="stars">⭐ ⭐ ⭐</div>
         
         <div class="footer">
             🎉 Que le plus moche gagne ! 🎉
+        </div>
+    </div>
+	 <audio id="bgMusic" loop>
+        <source src="Jingle.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+
+    <div class="music-control">
+        <div class="control-button" id="musicToggle">
+            <span class="music-icon" id="musicIcon">🔊</span>
+        </div>
+        <div class="volume-container">
+            <span class="volume-label">Volume</span>
+            <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
+            <span class="volume-value" id="volumeValue">50%</span>
         </div>
     </div>
     
@@ -213,6 +326,58 @@
             snowflake.style.fontSize = (Math.random() * 20 + 20) + 'px';
             snowflakesContainer.appendChild(snowflake);
         }
+	 const audio = document.getElementById('bgMusic');
+        const toggle = document.getElementById('musicToggle');
+        const icon = document.getElementById('musicIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        let isPlaying = false;
+
+        // Définir le volume initial
+        audio.volume = 0.5;
+
+        // Démarrage automatique avec interaction utilisateur
+        document.addEventListener('click', function startMusic() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    icon.textContent = '🔊';
+                }).catch(err => {
+                    console.log('Lecture automatique bloquée:', err);
+                });
+                document.removeEventListener('click', startMusic);
+            }
+        }, { once: true });
+
+        // Bouton Play/Pause
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isPlaying) {
+                audio.pause();
+                icon.textContent = '🔇';
+                isPlaying = false;
+            } else {
+                audio.play();
+                icon.textContent = '🔊';
+                isPlaying = true;
+            }
+        });
+
+        // Contrôle du volume
+        volumeSlider.addEventListener('input', function() {
+            const volume = this.value / 100;
+            audio.volume = volume;
+            volumeValue.textContent = this.value + '%';
+            
+            // Changer l'icône selon le volume
+            if (volume === 0) {
+                icon.textContent = '🔇';
+            } else if (volume < 0.5) {
+                icon.textContent = '🔉';
+            } else {
+                icon.textContent = '🔊';
+            }
+        });
     </script>
 </body>
 </html>
