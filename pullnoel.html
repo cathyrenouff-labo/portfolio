@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours du Pull Mochede Noël</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Comic+Neue:wght@700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a472a 0%, #2d5016 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .poster {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+            border: 15px solid #ffeb3b;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .snowflakes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .snowflake {
+            position: absolute;
+            color: white;
+            font-size: 30px;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(1000px) rotate(360deg); }
+        }
+        
+        .title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3.5em;
+            color: #ffeb3b;
+            text-align: center;
+            text-shadow: 4px 4px 0 #00802b, 6px 6px 0 rgba(0,0,0,0.3);
+            margin: 0 0 20px 0;
+            line-height: 1.1;
+            position: relative;
+            z-index: 1;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .subtitle {
+            font-size: 2em;
+            color: white;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sweater-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sweater {
+            font-size: 120px;
+            animation: wiggle 1.5s infinite;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .info-box {
+            background: white;
+            border: 5px dashed #00802b;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2em;
+            color: #cc0000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .info-text {
+            font-size: 1.3em;
+            color: #2d5016;
+            text-align: center;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+        }
+        
+        .stars {
+            font-size: 2em;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.8em;
+            color: #ffeb3b;
+            text-align: center;
+            margin-top: 30px;
+            text-shadow: 2px 2px 0 #00802b;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .decoration {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.9;
+        }
+        
+        .decoration-1 { top: 250px; left: 30px; }
+        .decoration-2 { top: 250px; right: 40px; }
+        .decoration-3 { bottom: 100px; left: 50px; }
+        .decoration-4 { bottom: 100px; right: 30px; }
+		.music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 5px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-control:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-button {
+            background: linear-gradient(135deg, #E8151B 0%, #4F0A0F 100%);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .control-button:hover {
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 24px;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-label {
+            color: #E8151B 0%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .volume-slider {
+            width: 120px;
+            height: 6px;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #E8151B 0%, #4F0A0F 100%);
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #0EAD41;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            border-width: 4px;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #0EAD41;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .volume-slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            border-width: 4px;
+        }
+
+        .volume-value {
+            color: #0EAD41;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <div class="snowflakes" id="snowflakes"></div>
+        
+        <div class="decoration decoration-1">🎄</div>
+        <div class="decoration decoration-2">🎁</div>
+        <div class="decoration decoration-3">⛄</div>
+        <div class="decoration decoration-4">🤶</div>
+        
+        <h1 class="title">
+            LE CONCOURS DU<br>
+            PULL MOCHE DE NOËL ! <br>
+			EST DE RETOUR ! 🎅 
+        </h1>
+        
+        <div class="sweater-container">
+            <div class="sweater">🧶</div>
+        </div>
+        
+        <div class="info-box">
+            <div class="info-title">Profs Volontaires Recherchés ! 🎓</div>
+            <div class="info-text">
+                <span class="emoji">🎄</span> Sortez vos pulls les plus kitsch !<br>
+                <span class="emoji">✨</span> Plus c'est moche, mieux c'est !<br>
+                <span class="emoji">🍫</span> Un prix GOURMAND à gagner !<br>
+                <span class="emoji">🏆</span> Rires et bonne humeur garantis !
+            </div>
+        </div>
+        
+        <div class="subtitle">
+            La dernière semaine avant les vacances
+        </div>
+        
+        <div class="stars">⭐ ⭐ ⭐</div>
+        
+        <div class="footer">
+            🎉 Que le plus moche gagne ! 🎉
+        </div>
+    </div>
+	 <audio id="bgMusic" loop>
+        <source src="Jingle.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+
+    <div class="music-control">
+        <div class="control-button" id="musicToggle">
+            <span class="music-icon" id="musicIcon">🔊</span>
+        </div>
+        <div class="volume-container">
+            <span class="volume-label">Volume</span>
+            <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
+            <span class="volume-value" id="volumeValue">50%</span>
+        </div>
+    </div>
+    
+    <script>
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const snowflakeSymbols = ['❄', '❅', '❆'];
+        
+        for (let i = 0; i < 20; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            snowflakesContainer.appendChild(snowflake);
+        }
+	 const audio = document.getElementById('bgMusic');
+        const toggle = document.getElementById('musicToggle');
+        const icon = document.getElementById('musicIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        let isPlaying = false;
+
+        // Définir le volume initial
+        audio.volume = 0.5;
+
+        // Démarrage automatique avec interaction utilisateur
+        document.addEventListener('click', function startMusic() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    icon.textContent = '🔊';
+                }).catch(err => {
+                    console.log('Lecture automatique bloquée:', err);
+                });
+                document.removeEventListener('click', startMusic);
+            }
+        }, { once: true });
+
+        // Bouton Play/Pause
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isPlaying) {
+                audio.pause();
+                icon.textContent = '🔇';
+                isPlaying = false;
+            } else {
+                audio.play();
+                icon.textContent = '🔊';
+                isPlaying = true;
+            }
+        });
+
+        // Contrôle du volume
+        volumeSlider.addEventListener('input', function() {
+            const volume = this.value / 100;
+            audio.volume = volume;
+            volumeValue.textContent = this.value + '%';
+            
+            // Changer l'icône selon le volume
+            if (volume === 0) {
+                icon.textContent = '🔇';
+            } else if (volume < 0.5) {
+                icon.textContent = '🔉';
+            } else {
+                icon.textContent = '🔊';
+            }
+        });
+    </script>
+</body>
+</html>
